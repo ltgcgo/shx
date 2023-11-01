@@ -6,7 +6,7 @@ let fsPointer=$((${#paths[@]} - 1))
 IFS='/'
 while [ "$fsPointer" -ge 0 ]; do
 	fsPath="${paths[*]:0:$((fsPointer + 1))}"
-	if [ -f "$fsPath/shx" ] ; then
+	if [ -f "$fsPath/shx" ] && [ -d "$fsPath/sh" ] ; then
 		cd "$fsPath"
 		break
 	fi
