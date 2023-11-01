@@ -2,6 +2,8 @@
 📜 Bash/PDKSH shell action executor. Never `npx` again.
 
 ## Supported shells
+* AT&T `ksh`
+  * May not work properly due to buggy `IFS` implementation.
 * Bash
 * `zsh`
 
@@ -13,5 +15,4 @@
 * `oksh` (as of version 7.3)
 * OpenBSD `ksh`
 * `yash` (as of version 2.55)
-* AT&T `ksh`
 * `mksh` (when array slicing is supported)
