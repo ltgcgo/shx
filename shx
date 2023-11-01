@@ -1,14 +1,28 @@
 #!/bin/bash
+# Locate the project folder
+OIFS="$IFS"
+IFS='/' read -r -a paths <<< "${PWD}"
+let fsPointer=$((${#paths[@]} - 1))
+IFS='/'
+while [ "$fsPointer" -ge 0 ]; do
+	fsPath="${paths[*]:0:$((fsPointer + 1))}"
+	if [ -f "$fsPath/shx" ] ; then
+		cd "$fsPath"
+		break
+	fi
+	fsPointer=$(($fsPointer - 1))
+done
+IFS="$OIFS"
+# Command parsing
 arg="$@"
 args=( "$@" )
 if [ "$arg" == "" ] ; then
+	echo -e "\033[1;37mshx 0.2\033[0m"
 	echo "All available actions:"
 	ls -1 sh | while IFS= read -r file; do
 		echo "${file/.sh/}"
 	done
-	exit
-fi
-if [ -e "sh/$1.sh" ] ; then
+elif [ -e "sh/$1.sh" ] ; then
 	export PATH=./:./sh/:$PATH
 	bash "sh/$1.sh" "${args[@]:1}"
 elif [ -e "sh/$1" ] ; then
