@@ -1,23 +1,47 @@
 #!/bin/bash
+# Check the current shell
 export CURRENT_SHELL=$(ps h -p $$ -o args='' | cut -f1 -d' ')
 if [[ "${NO_SHELL_CHECK}" == "" ]] &&
 	[[ "${CURRENT_SHELL}" != *"bash" ]] &&
-	[[ "${CURRENT_SHELL}" != *"ksh" ]]; then
+	[[ "${CURRENT_SHELL}" != *"ksh" ]] &&
+	[[ "${CURRENT_SHELL}" != *"zsh" ]]; then
 	echo "Please run with bash instead of ${CURRENT_SHELL}."
 	exit
 fi
+runner="bash"
+if [[ "${CURRENT_SHELL}" == *"bash" ]]; then
+	runner=$CURRENT_SHELL
+fi
+# Emit a sliced delimited string
+function sdstr {
+	IFS=' ' read -r -a arr <<< "$3" 2>/dev/null || arr=('' ${(@s:' ':)3})
+	echo ${#arr[@]}
+	eIdx=0
+	while [ "$eIdx" -lt "$1" ]; do
+		if [ "$eIdx" != "0" ]; then
+			printf "$2"
+		fi
+		printf "${arr[eIdx]}"
+		eIdx=$((eIdx+1))
+	done
+	echo ''
+}
 # Locate the project folder
 OIFS="$IFS"
 IFS='/' read -r -a paths <<< "$PWD" 2>/dev/null || paths=('' ${(@s:/:)PWD})
+#echo "${#paths[@]}"
 let fsPointer=$((${#paths[@]} - 1))
 IFS='/'
 while [ "$fsPointer" -ge 0 ]; do
-	fsPath="${paths[*]:0:$((fsPointer + 1))}"
+	fsPath="${paths[@]:0:$((fsPointer + 1))}"
 	fsPath=${fsPath:-/}
-	if [ -f "$fsPath/shx" ] && [ -d "$fsPath/sh" ] ; then
-		cd "$fsPath"
-		break
-	fi
+	#if [ -f "$fsPath/shx" ] && [ -d "$fsPath/sh" ] ; then
+		#echo "Switched to \"$fsPath\"."
+		#cd "$fsPath"
+		#break
+	#else
+		#echo "No match for \"$fsPath\"."
+	#fi
 	fsPointer=$(($fsPointer - 1))
 done
 IFS="$OIFS"
@@ -25,7 +49,7 @@ export PATH=$PATH:./:./sh
 # Command parsing
 arg="$@"
 args=( "$@" )
-if [ "$arg" == "" ] ; then
+if [[ "${arg}" == "" ]] ; then
 	echo -e "\033[1;37mshx 0.2\033[0m"
 	echo "All available actions:"
 	ls -1 sh | while IFS= read -r file; do

@@ -3,8 +3,7 @@
 
 ## Supported shells
 * Bash
-* AT&T `ksh`
-* `mksh` (when array slicing is supported)
+* `zsh`
 
 ## Unsupported shells
 * `ash`
@@ -14,4 +13,5 @@
 * `oksh` (as of version 7.3)
 * OpenBSD `ksh`
 * `yash` (as of version 2.55)
-* `zsh` (as of version 5.9)
+* AT&T `ksh`
+* `mksh` (when array slicing is supported)
