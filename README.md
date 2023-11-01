@@ -1,2 +1,2 @@
 # shx
-📜 Bash/PDKSH shell action executor. Never `npx` again.
+📜 Bash shell action executor. Never `npx` again.
