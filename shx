@@ -29,6 +29,10 @@ while [ "$fsPointer" -ge 0 ]; do
 	fi
 	fsPointer=$(($fsPointer - 1))
 done
+if [[ "$fsPath" == "/" ]] ; then
+	echo "No project directory is found. Quitting."
+	exit 1
+fi
 IFS="$OIFS"
 export PROJECT_DIR=$PWD
 export PATH=$PATH:./:./sh
