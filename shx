@@ -12,39 +12,25 @@ runner="bash"
 if [[ "${CURRENT_SHELL}" == *"bash" ]]; then
 	runner=$CURRENT_SHELL
 fi
-# Emit a sliced delimited string
-function sdstr {
-	IFS=' ' read -r -a arr <<< "$3" 2>/dev/null || arr=('' ${(@s:' ':)3})
-	echo ${#arr[@]}
-	eIdx=0
-	while [ "$eIdx" -lt "$1" ]; do
-		if [ "$eIdx" != "0" ]; then
-			printf "$2"
-		fi
-		printf "${arr[eIdx]}"
-		eIdx=$((eIdx+1))
-	done
-	echo ''
-}
 # Locate the project folder
 OIFS="$IFS"
 IFS='/' read -r -a paths <<< "$PWD" 2>/dev/null || paths=('' ${(@s:/:)PWD})
-#echo "${#paths[@]}"
 let fsPointer=$((${#paths[@]} - 1))
 IFS='/'
 while [ "$fsPointer" -ge 0 ]; do
 	fsPath="${paths[@]:0:$((fsPointer + 1))}"
 	fsPath=${fsPath:-/}
-	#if [ -f "$fsPath/shx" ] && [ -d "$fsPath/sh" ] ; then
+	if [ -f "$fsPath/shx" ] && [ -d "$fsPath/sh" ] ; then
 		#echo "Switched to \"$fsPath\"."
-		#cd "$fsPath"
-		#break
+		cd "$fsPath"
+		break
 	#else
 		#echo "No match for \"$fsPath\"."
-	#fi
+	fi
 	fsPointer=$(($fsPointer - 1))
 done
 IFS="$OIFS"
+export PROJECT_DIR=$PWD
 export PATH=$PATH:./:./sh
 # Command parsing
 arg="$@"

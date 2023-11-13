@@ -6,11 +6,16 @@ let
 in
 pkgs.mkShell {
 	packages = with pkgs; [
-		git
-		nano
 		bash
 		zsh
+		procps
+		tree
+		git
+		nano
 		curl
+		gzip
+		zopfli
+		brotli
 	];
 	GIT_EDITOR = "${pkgs.nano}/bin/nano";
 	shellHook = ''
