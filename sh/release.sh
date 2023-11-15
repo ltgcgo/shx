@@ -9,7 +9,7 @@ mkdir -p build
 rm build/release.* 2>/dev/null
 echob "Creating TAR archive..."
 tar --verbose -cf build/release.tar \
-	shx \
+	shx .gitignore \
 	nix/nano nix/env.nix nix/zsh/.zshName nix/zsh/.zshrc \
 	sh/sh.sh sh/commit.sh sh/amend.sh sh/tag.sh sh/push.sh \
 	sh/which sh/echob\
