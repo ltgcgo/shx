@@ -1,5 +1,7 @@
 #!/bin/bash
+# shx Standard Utility
 #
+# Customizable bundle emitter (upcoming)
 #
 # Clean up the previous builds
 mkdir -p build
