@@ -1,8 +1,5 @@
 #!/bin/bash
 #
-# This build script is specific for the shx project.
-# If you want to change how your project is built,
-# please rewrite this script from scratch.
 #
 # Clean up the previous builds
 mkdir -p build

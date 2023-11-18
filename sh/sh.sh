@@ -1,8 +1,14 @@
 #!/bin/bash
+# shx Standard Utility
 if [ -e "$(which nix-shell)" ]; then
-	echo "Preparing Nix shell environment..."
-	nix-shell nix/env.nix --quiet --pure --command zsh
-	echo "Quitting Nix shell environment..."
+	useNix=${1:-env}
+	if [ -f "nix/${useNix}.nix" ]; then
+		echo "Preparing Nix shell with: ${useNix}.nix..."
+		nix-shell nix/${useNix}.nix --quiet --pure --command zsh
+		echo "Quitting Nix shell..."
+	else
+		echo "${useNix}.nix does not exist."
+	fi
 else
 	echo "Nix Shell is not available."
 fi

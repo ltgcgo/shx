@@ -1,4 +1,5 @@
 #!/bin/bash
+# shx Standard Utility
 # Push to a single remote
 git stage -A && git commit --amend && git push --force $1
 # Push to all remotes

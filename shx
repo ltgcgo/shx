@@ -1,5 +1,7 @@
 #!/bin/bash
 # Check the current shell
+export SHX_VERSION=0.2.1
+export INVOKE_DIR=$PWD
 export CURRENT_SHELL=$(ps h -p $$ -o args='' | cut -f1 -d' ')
 if [[ "${NO_SHELL_CHECK}" == "" ]] &&
 	[[ "${CURRENT_SHELL}" != *"bash" ]] &&
@@ -34,22 +36,22 @@ if [[ "$fsPath" == "/" ]] ; then
 	exit 1
 fi
 IFS="$OIFS"
-export PROJECT_DIR=$PWD
+export SOURCE_DIR=$PWD
 export PATH=$PATH:./:./sh
 # Command parsing
 arg="$@"
 args=( "$@" )
 if [[ "${arg}" == "" ]] ; then
-	echo -e "\033[1;37mshx 0.2\033[0m"
+	echo -e "\033[1;37mshx ${SHX_VERSION}\033[0m"
 	echo "All available actions:"
 	ls -1 sh | while IFS= read -r file; do
-		echo "${file/.sh/}"
+		echo " ·shx ${file/.sh/}"
 	done
 elif [ -e "sh/$1.sh" ] ; then
 	bash "sh/$1.sh" "${args[@]:1}"
 elif [ -e "sh/$1" ] ; then
 	bash "sh/$1" "${args[@]:1}"
 else
-	echo "No action found as \"$1\". Command: \"${args[@]:1}\"".
+	echo -e "\033[1;31mError\033[0m: No action found as \"$1\". Command: shx ${args[@]:1}".
 fi
 exit
