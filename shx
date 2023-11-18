@@ -48,7 +48,7 @@ if [[ "${arg}" == "" ]] ; then
 	echo -e "\033[1;37mshx ${SHX_VERSION}\033[0m"
 	echo "All available actions:"
 	ls -1 sh | while IFS= read -r file; do
-		echo "· shx ${file/.sh/}"
+		echo "· ${file/.sh/}"
 	done
 elif [ -e "sh/$1.sh" ] ; then
 	bash "sh/$1.sh" "${args[@]:1}"
