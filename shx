@@ -10,6 +10,15 @@ if [[ "${NO_SHELL_CHECK}" == "" ]] &&
 	echo "Please run with bash instead of ${CURRENT_SHELL}."
 	exit
 fi
+# Define runner
+runner="bash"
+if [[ "${CURRENT_SHELL}" == *"bash" ]]; then
+	runner=$CURRENT_SHELL
+elif [[ "$(bash --version >/dev/null 2>/dev/null;echo $?)" == "0" ]]; then
+	printf ""
+else
+	echo -e "\033[1;33mWarning\033[0m: Not using Bash. Scripts may not work."
+fi
 # Locate the project folder
 OIFS="$IFS"
 IFS='/' read -r -a paths <<< "$PWD" 2>/dev/null || paths=('' ${(@s:/:)PWD})
@@ -34,13 +43,6 @@ fi
 IFS="$OIFS"
 export SOURCE_DIR=$PWD
 export PATH=$PATH:./:./sh
-# Define runner
-runner="bash"
-if [[ "${CURRENT_SHELL}" == *"bash" ]]; then
-	runner=$CURRENT_SHELL
-else
-	echo -e "\033[1;33mWarning\033[0m: Not using Bash. Scripts may not work."
-fi
 # Command parsing
 arg="$@"
 args=( "$@" )
