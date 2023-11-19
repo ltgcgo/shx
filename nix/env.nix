@@ -7,6 +7,7 @@ in
 pkgs.mkShell {
 	packages = with pkgs; [
 		ncurses
+		less
 		bash
 		zsh
 		procps
