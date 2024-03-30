@@ -1,6 +1,6 @@
 #!/bin/bash
 # shx Standard Utility
-echo "[1;37mGit Commit Signing[0m"
+echo "[1;37mGit Commit Signing: GnuPG[0m"
 echo "Below is a list of locally available keys."
 printf "\n"
 gpg --list-secret-keys --keyid-format=long
