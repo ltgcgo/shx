@@ -9,7 +9,10 @@ else
 	echo "${useNix}.nix does not exist."
 fi
 if [ -d "$USER_DIR/.gnupg" ]; then
-	gpgSrc="-v $USER_DIR/.gnupg:/root/.gnupgSrc:ro"
+	gpgSrc="$gpgSrc -v $USER_DIR/.gnupg:/root/.shadowSrc/.gnupg:ro"
+fi
+if [ -f "$USER_DIR/.gitconfig" ]; then
+	gpgSrc="$gpgSrc -v $USER_DIR/.gitconfig:/root/.shadowSrc/.gitconfig:ro"
 fi
 if [ -e "$(which nix-shell)" ]; then
 	echo "Starting Nix shell..."

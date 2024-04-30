@@ -1,9 +1,9 @@
 #!/bin/bash
 # Entrypoint for Docker containers
 cd /root/
-if [ -d ".gnupgSrc" ] && [ ! -d ".gnupg" ] ; then
-	echo "Shadowing the host GnuPG key store..."
-	cp --no-preserve mode,ownership -r .gnupgSrc .gnupg
+if [ -d ".shadowSrc" ]; then
+	echo "Shadowing the host configs..."
+	cp --no-preserve mode,ownership -r .shadowSrc/.* ./
 	chmod 700 .gnupg
 fi
 cd /data/
