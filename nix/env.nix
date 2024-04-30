@@ -20,8 +20,7 @@ pkgs.mkShell {
 		nano
 		curl
 		gzip
-		zopfli
-		brotli
+		gnupg
 		# Development dependencies
 	];
 	GIT_EDITOR = "${pkgs.nano}/bin/nano";
