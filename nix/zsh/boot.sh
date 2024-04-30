@@ -1,5 +1,11 @@
 #!/bin/bash
 # Entrypoint for Docker containers
+cd /root/
+if [ -d ".gnupgSrc" ] && [ ! -d ".gnupg" ] ; then
+	echo "Shadowing the host GnuPG key store..."
+	cp --no-preserve mode,ownership -r .gnupgSrc .gnupg
+	chmod 700 .gnupg
+fi
 cd /data/
 echo "Preparing Nix environment..."
 export NIX_PATH=nixpkgs=channel:nixos-unstable
